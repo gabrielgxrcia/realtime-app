@@ -72,7 +72,7 @@ const page = async ({}) => {
                   <span className="text-zinc-400">
                     {friend.lastMessage.senderId === session.user.id
                       ? 'Você: '
-                      : ''}
+                      : 'Mensagem: '}
                   </span>
                   {friend.lastMessage.text}
                 </p>

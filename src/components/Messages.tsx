@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils'
 import { Message } from '@/lib/validations/message'
+import { format, utcToZonedTime } from 'date-fns-tz'
 import { FC, useRef, useState } from 'react'
 
 interface MessagesProps {
@@ -13,6 +14,13 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
 
   const scrollDownRef = useRef<HTMLDivElement | null>(null)
+
+  const formatTimestamp = (timestamp: number) => {
+    const brazilTimezone = 'America/Sao_Paulo'
+    const date = new Date(timestamp)
+    const brazilDate = utcToZonedTime(date, brazilTimezone)
+    return format(brazilDate, 'HH:mm', { timeZone: brazilTimezone })
+  }
 
   return (
     <div
@@ -58,7 +66,7 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
                 >
                   {message.text}{' '}
                   <span className="ml-2 text-xs text-gray-400">
-                    {message.timestamp}
+                    {formatTimestamp(message.timestamp)}
                   </span>
                 </span>
               </div>

@@ -1,10 +1,11 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { pusherClient } from '@/lib/pusher'
+import { cn, toPusherKey } from '@/lib/utils'
 import { Message } from '@/lib/validations/message'
 import { format, utcToZonedTime } from 'date-fns-tz'
 import Image from 'next/image'
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
 interface MessagesProps {
   initialMessages: Message[]
@@ -20,6 +21,24 @@ const Messages: FC<MessagesProps> = ({
   sessionImg,
 }) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey())
+
+    const friendRequestHandler = ({
+      senderId,
+      senderEmail,
+    }: IncomingFriendRequest) => {
+      setFriendRequests(prev => [...prev, { senderId, senderEmail }])
+    }
+
+    pusherClient.bind('incoming_friend_requests', friendRequestHandler)
+
+    return () => {
+      pusherClient.unsubscribe(`user:${sessionId}:incoming_friend_requests`)
+      pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
+    }
+  })
 
   const scrollDownRef = useRef<HTMLDivElement | null>(null)
 

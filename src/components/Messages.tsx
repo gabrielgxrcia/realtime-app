@@ -3,13 +3,14 @@
 import { pusherClient } from '@/lib/pusher'
 import { cn, toPusherKey } from '@/lib/utils'
 import { Message } from '@/lib/validations/message'
-import { format, utcToZonedTime } from 'date-fns-tz'
+import { format } from 'date-fns'
 import Image from 'next/image'
 import { FC, useEffect, useRef, useState } from 'react'
 
 interface MessagesProps {
   initialMessages: Message[]
   sessionId: string
+  chatId: string
   sessionImg: string | null | undefined
   chatPartner: User
 }
@@ -17,36 +18,31 @@ interface MessagesProps {
 const Messages: FC<MessagesProps> = ({
   initialMessages,
   sessionId,
+  chatId,
   chatPartner,
   sessionImg,
 }) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
 
   useEffect(() => {
-    pusherClient.subscribe(toPusherKey())
+    pusherClient.subscribe(toPusherKey(`chat:${chatId}`))
 
-    const friendRequestHandler = ({
-      senderId,
-      senderEmail,
-    }: IncomingFriendRequest) => {
-      setFriendRequests(prev => [...prev, { senderId, senderEmail }])
+    const messageHandler = (message: Message) => {
+      setMessages(prev => [message, ...prev])
     }
 
-    pusherClient.bind('incoming_friend_requests', friendRequestHandler)
+    pusherClient.bind('incoming-message', messageHandler)
 
     return () => {
-      pusherClient.unsubscribe(`user:${sessionId}:incoming_friend_requests`)
-      pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
+      pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`))
+      pusherClient.unbind('incoming-message', messageHandler)
     }
-  })
+  }, [chatId])
 
   const scrollDownRef = useRef<HTMLDivElement | null>(null)
 
   const formatTimestamp = (timestamp: number) => {
-    const brazilTimezone = 'America/Sao_Paulo'
-    const date = new Date(timestamp)
-    const brazilDate = utcToZonedTime(date, brazilTimezone)
-    return format(brazilDate, 'HH:mm', { timeZone: brazilTimezone })
+    return format(timestamp, 'HH:mm')
   }
 
   return (
@@ -77,7 +73,7 @@ const Messages: FC<MessagesProps> = ({
                   'flex flex-col space-y-2 text-base max-w-xs mx-2',
                   {
                     'order-1 items-end': isCurrentUser,
-                    'order-2 items-start': isCurrentUser,
+                    'order-2 items-start': !isCurrentUser,
                   }
                 )}
               >
@@ -87,7 +83,7 @@ const Messages: FC<MessagesProps> = ({
                     'bg-gray-200 text-gray-900': !isCurrentUser,
                     'rounded-br-none':
                       !hasNextMessageFromSameUser && isCurrentUser,
-                    'rounded-b1-none':
+                    'rounded-bl-none':
                       !hasNextMessageFromSameUser && !isCurrentUser,
                   })}
                 >

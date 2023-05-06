@@ -25,21 +25,25 @@ const FriendRequests: FC<FriendRequestsProps> = ({
     pusherClient.subscribe(
       toPusherKey(`user:${sessionId}:incoming_friend_requests`)
     )
+    console.log('listening to ', `user:${sessionId}:incoming_friend_requests`)
 
     const friendRequestHandler = ({
       senderId,
       senderEmail,
     }: IncomingFriendRequest) => {
+      console.log('function got called')
       setFriendRequests(prev => [...prev, { senderId, senderEmail }])
     }
 
     pusherClient.bind('incoming_friend_requests', friendRequestHandler)
 
     return () => {
-      pusherClient.unsubscribe(`user:${sessionId}:incoming_friend_requests`)
+      pusherClient.unsubscribe(
+        toPusherKey(`user:${sessionId}:incoming_friend_requests`)
+      )
       pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
     }
-  })
+  }, [sessionId])
 
   const acceptFriend = async (senderId: string) => {
     await axios.post('/api/friends/accept', { id: senderId })
@@ -64,7 +68,9 @@ const FriendRequests: FC<FriendRequestsProps> = ({
   return (
     <>
       {friendRequests.length === 0 ? (
-        <p className="text-sm text-zinc-500">Nada para mostrar aqui...</p>
+        <p className="text-sm text-zinc-500">
+          Nenhuma solicitação de amizade...
+        </p>
       ) : (
         friendRequests.map(request => (
           <div key={request.senderId} className="flex gap-4 items-center">

@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       return new Response('Unauthorized', { status: 401 })
     }
 
-    // Verificação se já não são amigos.
+    // Verificando se ambos usuários já não são amigos.
     const isAlreadyFriends = await fetchRedis(
       'sismember',
       `user:${session.user.id}:friends`,
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
     const user = JSON.parse(userRaw) as User
     const friend = JSON.parse(friendRaw) as User
 
-    // Notificação usuário adicionado.
+    // Notificação de amizade entre usuários
 
     await Promise.all([
       pusherServer.trigger(

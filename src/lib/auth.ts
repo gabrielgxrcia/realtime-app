@@ -24,6 +24,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
+
   pages: {
     signIn: '/login',
   },
@@ -40,7 +41,10 @@ export const authOptions: NextAuthOptions = {
         | null
 
       if (!dbUserResult) {
-        token.id = user!.id
+        if (user) {
+          token.id = user!.id
+        }
+
         return token
       }
 

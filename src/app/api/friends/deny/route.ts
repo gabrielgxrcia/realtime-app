@@ -18,10 +18,12 @@ export async function POST(req: Request) {
 
     return new Response('OK')
   } catch (error) {
+    console.log(error)
+
     if (error instanceof z.ZodError) {
-      return new Response('Requisição inválida', { status: 422 })
+      return new Response('Invalid request payload', { status: 422 })
     }
 
-    return new Response('Requisição inválida', { status: 400 })
+    return new Response('Invalid request', { status: 400 })
   }
 }

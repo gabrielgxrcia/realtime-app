@@ -25,10 +25,8 @@ const Page: FC = () => {
   return (
     <ThemeProvider>
       <div className="flex h-screen items-center">
-        <div className="absolute inset-0 flex justify-end p-4">
-          <div className="mr-3 ">
-            <ThemeSwitch />
-          </div>
+        <div style={{ position: 'fixed', top: 15, right: 8 }}>
+          <ThemeSwitch />
         </div>
         <div className="w-1/2 h-full">
           <img

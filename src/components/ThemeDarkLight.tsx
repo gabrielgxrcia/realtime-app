@@ -27,7 +27,7 @@ export function ThemeSwitch() {
             className="flex items-center mb-1.5"
           >
             {currentTheme === 'dark' ? (
-              <Moon size={18} className="text-gray-800 mr-2" />
+              <Moon size={18} className="text-gray-400 mr-2" />
             ) : (
               <Sun size={18} className="text-gray-800 mr-2" />
             )}

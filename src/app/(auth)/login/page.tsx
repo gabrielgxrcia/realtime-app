@@ -4,6 +4,9 @@ import Button from '@/components/ui/Button'
 import { FC, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
+import { BsGoogle } from 'react-icons/bs'
+import ThemeSwitch from '@/components/ThemeDarkLight'
+import { ThemeProvider } from 'next-themes'
 
 const Page: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -20,57 +23,82 @@ const Page: FC = () => {
   }
 
   return (
-    <>
-      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full flex flex-col items-center max-w-md space-y-8">
-          <div className="flex flex-col items-center gap-8">
-            logo
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Faça login em sua conta
-            </h2>
+    <ThemeProvider>
+      <div className="flex h-screen items-center">
+        <div className="absolute inset-0 flex justify-end p-4">
+          <div className="mr-3 ">
+            <ThemeSwitch />
           </div>
+        </div>
+        <div className="w-1/2 h-full">
+          <img
+            src="https://cdn.dribbble.com/users/335922/screenshots/14707725/media/d7eb9e0fc659ff2775da5412b63d2e53.png?compress=1&resize=1600x1200&vertical=top"
+            alt="background image"
+            className="h-full w-full object-cover"
+          />
+        </div>
 
-          <Button
-            isLoading={isLoading}
-            type="button"
-            className="max-w-sm mx-auto w-full"
-            onClick={loginWithGoogle}
-          >
-            {isLoading ? null : (
-              <svg
-                className="mr-2 h-4 w-4"
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fab"
-                data-icon="github"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                  fill="#4285F4"
-                />
-                <path
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                  fill="#34A853"
-                />
-                <path
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                  fill="#FBBC05"
-                />
-                <path
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                  fill="#EA4335"
-                />
-                <path d="M1 1h22v22H1z" fill="none" />
-              </svg>
-            )}
-            Google
-          </Button>
+        <div className="w-1/2 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+          <div className="w-full flex flex-col items-center max-w-md space-y-8">
+            <div className="flex flex-col items-center gap-8">
+              <div className="text-center ">
+                <div className="text-2xl font-semibold tracking-tight text-gray-800">
+                  <span>Crie sua conta</span>
+                </div>
+                <p className="mt-2 text-sm text-gray-500">
+                  Digite seu e-mail abaixo para criar sua conta
+                </p>
+                <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                  <input
+                    type="email"
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-transparent px-3 py-2 text-sm text-gray-500 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    placeholder="Insira seu e-mail"
+                  />
+                </div>
+                <Button
+                  isLoading={isLoading}
+                  type="button"
+                  className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-gray-300 hover:opacity-85 h-10 py-2 px-4 mt-1.5"
+                >
+                  <span key="text">Continuar</span>
+                </Button>
+                <div className="mt-4 flex items-center gap-4">
+                  <div className="border border-gray-300 border-t-0 flex-1 w-1/4" />
+                  <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <span>OU CONTINUE COM</span>
+                  </div>
+                  <div className="border border-gray-300 border-t-0 flex-1 w-1/4" />
+                </div>
+                <Button
+                  isLoading={isLoading}
+                  type="button"
+                  className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input text-gray-800 bg-white hover:bg-gray-200 hover:text-accent-foreground hover:border-gray-300 h-10 py-2 px-4 mt-5"
+                  onClick={loginWithGoogle}
+                >
+                  <div key="icon" className="mr-2">
+                    {isLoading ? null : <BsGoogle className="h-5 w-5" />}
+                  </div>
+                  <span key="text">Google</span>
+                </Button>
+                <div className="mt-5 text-sm text-gray-500 text-center">
+                  <p>Ao clicar em continuar, você concorda com nossos</p>
+                  <p>
+                    <a href="#" className="underline">
+                      Termos de serviço
+                    </a>{' '}
+                    e{' '}
+                    <a href="#" className="underline">
+                      política de privacidade
+                    </a>
+                    .
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </ThemeProvider>
   )
 }
 

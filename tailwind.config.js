@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
-
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
@@ -15,7 +15,11 @@ module.exports = {
         '2xl': '1360px',
       },
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
+    },
   },
   plugins: [require('@tailwindcss/forms')],
 }

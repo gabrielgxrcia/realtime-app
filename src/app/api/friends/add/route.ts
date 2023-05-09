@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     )) as string
 
     if (!idToAdd) {
-      return new Response('Essa pessoa não existe.', { status: 400 })
+      return new Response('Esse usuário não foi encontrado!', { status: 400 })
     }
 
     const session = await getServerSession(authOptions)
@@ -34,7 +34,6 @@ export async function POST(req: Request) {
       })
     }
 
-    // Verificando se o usuário já foi adicionado.
     const isAlreadyAdded = (await fetchRedis(
       'sismember',
       `user:${idToAdd}:incoming_friend_requests`,
@@ -45,7 +44,6 @@ export async function POST(req: Request) {
       return new Response('Já adicionou este usuário', { status: 400 })
     }
 
-    // Verificando se o usuário já foi adicionado.
     const isAlreadyFriends = (await fetchRedis(
       'sismember',
       `user:${session.user.id}:friends`,
@@ -55,8 +53,6 @@ export async function POST(req: Request) {
     if (isAlreadyFriends) {
       return new Response('Você já é um amigo deste usuário.', { status: 400 })
     }
-
-    // Verificação de pedido, enviar pedido de amizade.
 
     await pusherServer.trigger(
       toPusherKey(`user:${idToAdd}:incoming_friend_requests`),

@@ -25,13 +25,11 @@ const FriendRequests: FC<FriendRequestsProps> = ({
     pusherClient.subscribe(
       toPusherKey(`user:${sessionId}:incoming_friend_requests`)
     )
-    console.log('listening to ', `user:${sessionId}:incoming_friend_requests`)
 
     const friendRequestHandler = ({
       senderId,
       senderEmail,
     }: IncomingFriendRequest) => {
-      console.log('function got called')
       setFriendRequests(prev => [...prev, { senderId, senderEmail }])
     }
 
@@ -74,7 +72,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
       ) : (
         friendRequests.map(request => (
           <div key={request.senderId} className="flex gap-4 items-center">
-            <UserPlus className="text-black" />
+            <UserPlus className="text-black dark:text-zinc-400" />
             <p className="font-medium text-lg">{request.senderEmail}</p>
             <button
               onClick={() => acceptFriend(request.senderId)}

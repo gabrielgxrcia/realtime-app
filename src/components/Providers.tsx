@@ -1,4 +1,5 @@
 'use client'
+import { ThemeProvider } from 'next-themes'
 import { FC, ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
 
@@ -9,8 +10,10 @@ interface ProvidersProps {
 const Providers: FC<ProvidersProps> = ({ children }) => {
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
-      {children}
+      <ThemeProvider attribute="class" enableSystem={true}>
+        <Toaster position="top-center" reverseOrder={false} />
+        {children}
+      </ThemeProvider>
     </>
   )
 }

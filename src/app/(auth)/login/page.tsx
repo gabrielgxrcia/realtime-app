@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast'
 import { BsGoogle } from 'react-icons/bs'
 import ThemeSwitch from '@/components/ThemeDarkLight'
 import Providers from '@/components/Providers'
+import { Input } from '@/components/ui/input'
 
 const Page: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -49,11 +50,7 @@ const Page: FC = () => {
                   Digite seu e-mail abaixo para criar sua conta
                 </p>
                 <div className="mt-4 flex flex-col sm:flex-row gap-4">
-                  <input
-                    type="email"
-                    className="flex h-10 w-full rounded-md border border-gray-200 bg-transparent px-3 py-2 text-sm text-gray-500 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    placeholder="Insira seu e-mail"
-                  />
+                  <Input type="email" placeholder="Insira seu e-mail" />
                 </div>
                 <Button
                   isLoading={isLoading}
@@ -72,7 +69,7 @@ const Page: FC = () => {
                 <Button
                   isLoading={isLoading}
                   type="button"
-                  className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input text-gray-800 bg-white hover:bg-gray-200 hover:text-accent-foreground hover:border-gray-300 h-10 py-2 px-4 mt-5 dark:bg-transparent dark:hover:bg-gray-800 dark:text-white dark:hover:text-white"
+                  className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input text-gray-800 bg-white hover:bg-gray-200 hover:text-accent-foreground hover:border-gray-300 h-10 py-2 px-4 mt-5 dark:bg-transparent dark:hover:bg-gray-800 dark:border-white dark:text-white dark:hover:text-white"
                   onClick={loginWithGoogle}
                 >
                   <div key="icon" className="mr-2">

@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GB-Chat
 
-## Getting Started
+GB-Chat é uma aplicação de bate-papo em tempo real construída com Realtime messaging. Com a GB-Chat, você pode adicionar amigos e enviar solicitações de amizade por email, além de ter uma interface de usuário responsiva construída com TailwindCSS. Também oferece proteção para rotas sensíveis e autenticação via Google.
 
-First, run the development server:
+### Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- Adicionar amigos e enviar solicitações de amizade via e-mail
+- Banco de dados Redis para consultas de alta performance
+- Interface de usuário responsiva construída com TailwindCSS
+- Proteção de rotas sensíveis
+- Autenticação com Google
+- Escrita em TypeScript
+- Ícones fornecidos por Lucide
+- Mesclagem de classes com tailwind-merge
+- Classes condicionais com clsx
+- Variantes com class-variance-authority
+- Instalação
+
+## Clone o repositório
+
+```
+git clone https://github.com/gabrielgxrcia/realtime-app.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instale as dependências
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+cd realtime-app
+npm install ou yarn
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Configure as variáveis de ambiente
 
-## Learn More
+```
+cp .env.local .env
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Inicie o servidor
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm start ou yarn start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Como usar
 
-## Deploy on Vercel
+1. Crie uma conta ou faça login com sua conta do Google
+2. Adicione amigos enviando solicitações por e-mail ou aceitando solicitações recebidas
+3. Comece a conversar com seus amigos em tempo real!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Agradecimentos
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Components de UI](https://ui.shadcn.com/)
+
+## Licença
+
+[MIT](https://choosealicense.com/licenses/mit/)
